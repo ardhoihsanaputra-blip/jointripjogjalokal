@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Trip Jogja | Paket Wisata & Custom Tour Yogyakarta</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif;
+            background-image: radial-gradient(rgba(217, 119, 6, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .dest-card input:checked + div, .promo-card input:shadow + div {
+            border-color: #d97706;
+            background-color: #fef3c7;
+        }
+        .tab-btn.active {
+            background-color: #d97706;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- TOP NAVIGATION -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-amber-100">
+        <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-amber-700 tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-route text-amber-600"></i> JOIN TRIP JOGJA
+            </a>
+            <a href="tel:081225299088" class="text-amber-700 hover:text-amber-800 p-2 text-lg">
+                <i class="fa-solid fa-phone"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative bg-amber-950 text-white py-14 px-4 text-center overflow-hidden">
+        <div class="absolute inset-0 opacity-50 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-amber-950/90 via-amber-950/20 to-black/40"></div>
+        
+        <div class="relative z-10 max-w-md mx-auto">
+            <span class="bg-amber-600 text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full tracking-wider shadow-md">Promo Paket Wisata 2026</span>
+            <h1 class="text-2xl font-bold mt-3 leading-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">Liburan Seru ke Jogja <br>Makin Mudah & Hemat!</h1>
+            <p class="text-slate-100 text-xs mt-2 font-normal px-4 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Pilih paket promo siap jalan atau rancang sendiri destinasi sesukamu.</p>
+        </div>
+    </section>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="max-w-md mx-auto px-4 py-6 space-y-4">
+        
+        <!-- SYSTEM NAVIGATION TAB -->
+        <div class="grid grid-cols-2 bg-slate-200 p-1 rounded-xl gap-1">
+            <button onclick="switchTab('promo')" id="tab-promo" class="tab-btn active py-2.5 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 text-slate-600">
+                <i class="fa-solid fa-tags"></i> Paket Promo
+            </button>
+            <button onclick="switchTab('custom')" id="tab-custom" class="tab-btn py-2.5 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 text-slate-600">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Custom Trip
+            </button>
+        </div>
+
+        <!-- FORM LOGISTIK UTAMA -->
+        <div class="bg-white rounded-2xl p-5 shadow-md border border-amber-100 space-y-4">
+            <div>
+                <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-amber-600"></i> Informasi Keberangkatan
+                </h2>
+            </div>
+            <div>
+                <label class="block text-[11px] font-semibold text-slate-500 mb-1">Nama Pemesan</label>
+                <input type="text" id="trip-name" placeholder="Masukkan nama lengkap Anda" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-medium focus:outline-none focus:border-amber-500" required>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-500 mb-1">Tanggal Trip</label>
+                    <input type="date" id="trip-date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-medium focus:outline-none focus:border-amber-500" required>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-500 mb-1">Jumlah Peserta</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl overflow-hidden justify-between">
+                        <button type="button" onclick="changeQty(-1)" class="px-3 py-2 text-slate-500 hover:bg-slate-100 font-bold text-xs">-</button>
+                        <input type="number" id="trip-guests" value="2" min="1" max="5" class="w-8 bg-transparent text-center text-xs font-semibold focus:outline-none" readonly>
+                        <button type="button" onclick="changeQty(1)" class="px-3 py-2 text-slate-500 hover:bg-slate-100 font-bold text-xs">+</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Nama mobil dihapus, menyisakan info kapasitas max saja -->
+            <p class="text-[10px] text-amber-600 font-medium bg-amber-50 px-2 py-1.5 rounded-lg border border-amber-100/50 flex items-center gap-1">
+                <i class="fa-solid fa-circle-info"></i> Harga promo standard berlaku untuk kapasitas maksimal 5 dewasa.
+            </p>
+        </div>
+
+        <!-- TAB 1: AREA DAFTAR 15 PAKET PROMO -->
+        <div id="panel-promo" class="space-y-3">
+            <div class="bg-white rounded-2xl p-5 shadow-md border border-amber-100">
+                <div class="mb-3">
+                    <label class="block text-xs font-bold text-slate-700 flex items-center gap-1">
+                        <i class="fa-solid fa-list-check text-amber-600"></i> Pilih Salah Satu Paket Wisata
+                    </label>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Ketuk paket pilihan Anda di bawah ini:</p>
+                </div>
+
+                <!-- SCROLL CONTAINER UNTUK PAKET PROMO -->
+                <div class="space-y-3 max-h-[400px] overflow-y-auto pr-1 py-1" id="promo-packets-container">
+                    <!-- Paket otomatis di-render oleh JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: AREA CUSTOM TRIP (DITAMBAHKAN INFORMASI HARGA NEGOSIASI VIA WA) -->
+        <div id="panel-custom" class="hidden space-y-3">
+            <div class="bg-white rounded-2xl p-5 shadow-md border border-amber-100">
+                <div class="flex justify-between items-center mb-1">
+                    <label class="block text-xs font-bold text-slate-700 flex items-center gap-1">
+                        <i class="fa-solid fa-map-pin text-amber-600"></i> Pilih Tujuanmu Sendiri
+                    </label>
+                    <span id="counter" class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">0 Terpilih</span>
+                </div>
+                <!-- Menambahkan info negosiasi via whatsapp sesuai instruksi -->
+                <p class="text-[11px] text-emerald-600 font-semibold mb-3 flex items-center gap-1">
+                    <i class="fa-solid fa-comments-dollar"></i> Estimasi harga akan dinegosiasikan langsung via WhatsApp.
+                </p>
+
+                <!-- CONTAINER LIST CUSTOM TRIP -->
+                <div class="space-y-2 max-h-80 overflow-y-auto pr-1 border-t border-b border-slate-100 py-3" id="custom-destinations-container">
+                    <!-- Destinasi di-render oleh JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- INFORMASI FASILITAS -->
+        <div class="bg-white rounded-2xl p-5 shadow-md border border-amber-100 space-y-4">
+            <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
+                <i class="fa-solid fa-circle-exclamation text-amber-600"></i> Syarat & Fasilitas Layanan
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <h4 class="text-[11px] font-bold text-emerald-700 flex items-center gap-1 mb-1.5">
+                        <i class="fa-solid fa-circle-check"></i> TERMASUK (INCLUDED):
+                    </h4>
+                    <ul class="text-[10px] text-slate-600 space-y-1 list-disc pl-4 font-medium">
+                        <li>Mobil Full AC & Bersih</li> <!-- Nama mobil dihapus -->
+                        <li>Driver Guide berpengalaman</li>
+                        <li>Bahan Bakar Minyak (BBM)</li>
+                        <li>Biaya Parkir seluruh lokasi</li>
+                        <li>Air Mineral per peserta</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[11px] font-bold text-rose-700 flex items-center gap-1 mb-1.5">
+                        <i class="fa-solid fa-circle-xmark"></i> TIDAK TERMASUK:
+                    </h4>
+                    <ul class="text-[10px] text-slate-600 space-y-1 list-disc pl-4 font-medium">
+                        <li class="font-bold text-rose-600">Tiket masuk tempat wisata</li>
+                        <li>Pengeluaran & kebutuhan pribadi</li>
+                        <li>Overtime (Durasi maks 12 jam / cut off 22.00)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-[10px] text-slate-400 font-light border-t border-slate-100 pt-2.5 leading-relaxed space-y-0.5">
+                <p>* Penjemputan gratis area Kota Jogja, Homestay, atau Hotel.</p>
+                <p>* Private Tour (tidak dicampur dengan tamu/rombongan lain).</p>
+                <p>* Perubahan jadwal/reschedule maksimal H-3 sebelum keberangkatan.</p>
+            </div>
+        </div>
+
+        <!-- ACTION SUBMIT BUTTON -->
+        <button type="button" onclick="prosesPemesanan()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-4 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+            <i class="fa-brands fa-whatsapp text-lg"></i> Ajukan Pemesanan via WhatsApp
+        </button>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-b from-slate-900 to-amber-950 text-slate-400 text-center py-8 px-4 text-xs relative">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-700 to-amber-500"></div>
+        <p class="font-bold text-white text-sm tracking-widest mb-1">JOIN TRIP JOGJA</p>
+        <p class="text-amber-500 text-xs font-semibold mb-3 tracking-wide">Liburan dijogja seru dan berkesan</p>
+        <p>&copy; 2026 Join Trip Jogja. All rights reserved.</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        const dataPaketPromo = [
+            { id: 1, nama: "PAKET 1", harga: "600K", destinasi: ["Merapi Lava Tour", "Suraloka", "Ledok Sambi", "Ibarbo Park"] },
+            { id: 2, nama: "PAKET 2", harga: "600K", destinasi: ["Keraton Yogyakarta", "Tamansari", "Jeep Gumuk Pasir", "Obelix Sea View"] },
+            { id: 3, nama: "PAKET 3", harga: "600K", destinasi: ["Candi Prambanan", "Merapi Lava Tour", "Bhumi Merapi", "Obelix Village"] },
+            { id: 4, nama: "PAKET 4", harga: "650K", destinasi: ["VW Safari Borobudur", "Candi Borobudur", "Merapi Lava Tour", "Kopi Klothok"] },
+            { id: 5, nama: "PAKET 5", harga: "650K", destinasi: ["Tumpeng Menoreh", "VW Safari Borobudur", "Ullen Sentalu", "Heha Forest"] },
+            { id: 6, nama: "PAKET 6", harga: "650K", destinasi: ["Candi Borobudur", "Merapi Lava Tour", "Candi Prambanan", "Obelix Hills"] },
+            { id: 7, nama: "PAKET 7", harga: "650K", destinasi: ["Goa Pindul", "Pantai Ngobaran", "Gesing Wonderland", "Puncak Segoro"] },
+            { id: 8, nama: "PAKET 8", harga: "650K", destinasi: ["Sunrise Bukit Panguk", "Hutan Pinus Mangunan", "Goa Pindul", "Pict Niq"] },
+            { id: 9, nama: "PAKET 9", harga: "650K", destinasi: ["Pantai Watulawang", "Pantai Sadranan", "Drini Park", "Obelix Sea View"] },
+            { id: 10, nama: "PAKET 10", harga: "650K", destinasi: ["Candi Prambanan", "Goa Pindul", "Pantai Ngobaran", "Pantai Nguyahan"] },
+            { id: 11, nama: "PAKET 11", harga: "650K", destinasi: ["Menoreh Dreamland", "Sungai Mudal", "Geblek Pari", "Studio Alam Gamplong"] },
+            { id: 12, nama: "PAKET 12", harga: "700K", destinasi: ["Sunrise Bukit Panguk", "Hutan Pinus Mangunan", "Goa Pindul", "Pantai Timang"] },
+            { id: 13, nama: "PAKET 13", harga: "700K", destinasi: ["Tumpeng Menoreh", "VW Safari Borobudur", "Merapi Lava Tour", "Ibarbo Park"] },
+            { id: 14, nama: "PAKET 14", harga: "900K", destinasi: ["Sunrise Bukit Silancur", "Nepal Van Java", "Desa Sukamakmur", "Bukit Rhema"] },
+            { id: 15, nama: "PAKET 15", harga: "1.050K", destinasi: ["Sunrise Sikunir Dieng", "Kawah Sikidang", "Candi Arjuna", "Pintu Langit Dieng"] }
+        ];
+
+        const dataLokasiCustom = [
+            "Alun-Alun Kidul", "Bhumi Merapi", "Bukit Klangon (Merapi)", "Bukit Rhema", "Candi Arjuna", 
+            "Candi Borobudur", "Candi Prambanan", "Desa Sukamakmur", "Drini Park", "Geblek Pari", 
+            "Gereja ayam", "Gesing Wonderland", "Goa Jomblang", "Goa Pindul", "HeHa Ocean View", 
+            "HeHa Sky View", "Heha Forest", "Hutan Pinus Mangunan", "Hutan Pinus Pengger", "Ibarbo Park", 
+            "Jeep Gumuk Pasir", "Jeep Lava Tour Merapi", "Kalibiru", "Kawah Sikidang", "Keraton Yogyakarta", 
+            "Kopi Klothok", "Ledok Sambi", "Malioboro", "Menoreh Dreamland", "Merapi Lava Tour", 
+            "Museum Ullen Sentalu", "Nepal Van Java", "Obelix Hills", "Obelix Sea View", "Obelix Village", 
+            "On the rock", "Pantai Drini", "Pantai Indrayanti", "Pantai Ngobaran", "Pantai Nguyahan", 
+            "Pantai Parangtritis", "Pantai Sadranan", "Pantai Timang", "Pantai Watulawang", "Pict Niq", 
+            "Pintu Langit Dieng", "Puncak Becici", "Puncak Segoro", "Studio Alam Gamplong", "Sungai Mudal", 
+            "Sunrise Bukit Panguk", "Sunrise Bukit Silancur", "Sunrise Punthuk Situmbu", "Sunrise Sikunir Dieng", 
+            "Taman Pelangi Jogja", "Taman Sari", "Tebing Breksi", "Tugu Jogja", "Tumpeng Menoreh", 
+            "Ullen Sentalu", "VW Safari Borobudur"
+        ];
+
+        let modeAktif = "promo"; 
+
+        window.onload = function() {
+            renderPromoPackets();
+            renderCustomDestinations();
+            
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('trip-date').value = tomorrow.toISOString().split('T')[0];
+        };
+
+        function switchTab(mode) {
+            modeAktif = mode;
+            document.getElementById('tab-promo').classList.toggle('active', mode === 'promo');
+            document.getElementById('tab-custom').classList.toggle('active', mode === 'custom');
+            document.getElementById('panel-promo').classList.toggle('hidden', mode !== 'promo');
+            document.getElementById('panel-custom').classList.toggle('hidden', mode !== 'custom');
+        }
+
+        function changeQty(amount) {
+            const qtyInput = document.getElementById('trip-guests');
+            let val = parseInt(qtyInput.value) + amount;
+            if(val < 1) val = 1;
+            if(val > 5) {
+                alert('Untuk peserta di atas 5 dewasa, mohon hubungi admin langsung untuk penyesuaian penawaran kapasitas khusus.');
+                return;
+            }
+            qtyInput.value = val;
+        }
+
+        function renderPromoPackets() {
+            const container = document.getElementById('promo-packets-container');
+            dataPaketPromo.forEach((pkt) => {
+                const label = document.createElement('label');
+                label.className = "block relative cursor-pointer group";
+                label.innerHTML = `
+                    <input type="radio" name="selected_promo" value="${pkt.id}" class="hidden peer">
+                    <div class="p-4 bg-slate-50 border-2 border-slate-200 rounded-xl transition-all peer-checked:border-amber-600 peer-checked:bg-amber-50/70 hover:border-slate-300">
+                        <div class="flex justify-between items-center border-b border-slate-200/60 pb-1.5 mb-2">
+                            <span class="text-xs font-bold text-slate-900 tracking-wide">${pkt.nama}</span>
+                            <span class="text-xs font-extrabold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">IDR ${pkt.harga}</span>
+                        </div>
+                        <ul class="text-[11px] text-slate-600 space-y-0.5 pl-3 list-disc">
+                            ${pkt.destinasi.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        function renderCustomDestinations() {
+            const container = document.getElementById('custom-destinations-container');
+            dataLokasiCustom.sort().forEach((item) => {
+                const label = document.createElement('label');
+                label.className = "block dest-card relative cursor-pointer";
+                label.innerHTML = `
+                    <input type="checkbox" name="destinations" value="${item}" class="hidden" onchange="handleCheckboxChange(this)">
+                    <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl transition hover:border-amber-400">
+                        <span class="text-xs font-semibold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-slate-400 text-[10px]"></i> ${item}
+                        </span>
+                        <i class="fa-regular fa-circle-check text-slate-300 text-sm check-icon"></i>
+                    </div>
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        function handleCheckboxChange(checkbox) {
+            const checkboxes = document.querySelectorAll('input[name="destinations"]:checked');
+            const counterLabel = document.getElementById('counter');
+            
+            const cardDiv = checkbox.nextElementSibling;
+            const icon = cardDiv.querySelector('.check-icon');
+            if(checkbox.checked) {
+                icon.className = "fa-solid fa-circle-check text-amber-600 text-sm check-icon";
+            } else {
+                icon.className = "fa-regular fa-circle-check text-slate-300 text-sm check-icon";
+            }
+            counterLabel.innerText = `${checkboxes.length} Terpilih`;
+        }
+
+        function prosesPemesanan() {
+            const namaPemesan = document.getElementById('trip-name').value.trim();
+            const tanggal = document.getElementById('trip-date').value;
+            const jumlahPeserta = document.getElementById('trip-guests').value;
+            const nomorWA = "6281225299088";
+
+            if (!namaPemesan) {
+                alert('Silakan masukkan nama pemesan terlebih dahulu!');
+                return;
+            }
+
+            if (!tanggal) {
+                alert('Silakan pilih tanggal keberangkatan terlebih dahulu!');
+                return;
+            }
+
+            let teksPesan = "";
+
+            if (modeAktif === "promo") {
+                const radioTerpilih = document.querySelector('input[name="selected_promo"]:checked');
+                if (!radioTerpilih) {
+                    alert('Silakan pilih salah satu Paket Promo terlebih dahulu!');
+                    return;
+                }
+                const paketObj = dataPaketPromo.find(p => p.id == radioTerpilih.value);
+
+                let rincianWisata = "";
+                paketObj.destinasi.forEach((d, idx) => { rincianWisata += `\n   ${idx + 1}. ${d}`; });
+
+                teksPesan = `Halo Admin *Join Trip Jogja*, saya tertarik memesan *PROMO PAKET FIX*:\n\n` +
+                            `👤 *Nama Pemesan:* ${namaPemesan}\n` +
+                            `📦 *Pilihan:* ${paketObj.nama} (${paketObj.harga})\n` +
+                            `📅 *Tanggal Trip:* ${tanggal}\n` +
+                            `👥 *Jumlah Peserta:* ${jumlahPeserta} Dewasa\n` +
+                            `📍 *Rute Destinasi:*${rincianWisata}\n\n` +
+                            `Mohon konfirmasi ketersediaan kuota standard armada. Terima kasih!`;
+            } else {
+                const selectedDests = [];
+                document.querySelectorAll('input[name="destinations"]:checked').forEach((cb) => {
+                    selectedDests.push(cb.value);
+                });
+
+                if (selectedDests.length === 0) {
+                    alert('Silakan pilih minimal 1 destinasi wisata custom!');
+                    return;
+                }
+
+                let infoDestinasi = "";
+                selectedDests.forEach((dest, index) => { infoDestinasi += `\n${index + 1}. ${dest}`; });
+
+                // Pesan WhatsApp dirubah menjadi pengajuan negosiasi penawaran harga sesuai instruksi
+                teksPesan = `Halo Admin *Join Trip Jogja*, saya ingin mengajukan rute *CUSTOM PACKET* untuk *NEGOSIASI HARGA VIA WA*:\n\n` +
+                            `👤 *Nama Pemesan:* ${namaPemesan}\n` +
+                            `📅 *Tanggal Trip:* ${tanggal}\n` +
+                            `👥 *Jumlah Peserta:* ${jumlahPeserta} Dewasa\n` +
+                            `📍 *Destinasi Rute Pilihan Mandiri:*${infoDestinasi}\n\n` +
+                            `Mohon informasikan penawaran harga terbaik dan mari kita negosiasikan biayanya. Terima kasih!`;
+            }
+
+            window.location.href = `https://wa.me/${nomorWA}?text=${encodeURIComponent(teksPesan)}`;
+        }
+    </script>
+</body>
+</html>
