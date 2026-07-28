@@ -134,35 +134,10 @@
             </div>
             
             <div class="grid grid-cols-2 gap-2 mt-2" id="github-gallery-container">
-                <div class="overflow-hidden rounded-xl aspect-square relative group cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="jeep merapi.jpeg" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Galeri 1">
-                    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <i class="fa-solid fa-magnifying-glass text-white text-lg"></i>
-                    </div>
+                <div class="col-span-2 text-center py-4 text-xs text-slate-400" id="gallery-loading">
+                    <i class="fa-solid fa-spinner fa-spin text-amber-600 mr-1"></i> Memuat foto dari GitHub...
                 </div>
-
-                <div class="overflow-hidden rounded-xl aspect-square relative group cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="jeepmerapi2.jpeg" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Galeri 2">
-                    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <i class="fa-solid fa-magnifying-glass text-white text-lg"></i>
-                    </div>
-                </div>
-
-                <div class="overflow-hidden rounded-xl aspect-square relative group cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="WhatsApp Image 2026-07-28 at 11.43.08.jpeg" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Galeri 3">
-                    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <i class="fa-solid fa-magnifying-glass text-white text-lg"></i>
-                    </div>
-                </div>
-
-                <div class="overflow-hidden rounded-xl aspect-square relative group cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="WhatsApp Image 2026-07-28 at 11.43.01.jpeg" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Galeri 4">
-                    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <i class="fa-solid fa-magnifying-glass text-white text-lg"></i>
-                    </div>
-                </div>
-
-                </div>
+            </div>
         </div>
 
         <div class="bg-white rounded-2xl p-5 shadow-md border border-amber-100 space-y-4">
@@ -258,12 +233,63 @@
         window.onload = function() {
             renderPromoPackets();
             renderCustomDestinations();
+            loadGitHubGallery(); // Mengambil foto secara otomatis dari GitHub
             
             const today = new Date();
             const tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('trip-date').value = tomorrow.toISOString().split('T')[0];
         };
+
+        // FUNGSI OTOMATIS AMBIL FOTO DARI REPOSITORY GITHUB
+        async function loadGitHubGallery() {
+            const owner = "ardhoihsanaputra-blip";
+            const repo = "jointripjogjalokal";
+            const container = document.getElementById('github-gallery-container');
+            
+            try {
+                // Memanggil GitHub API untuk membaca isi folder root repository
+                const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/`);
+                const files = await response.json();
+                
+                // Kosongkan loading text
+                container.innerHTML = "";
+
+                // Filter hanya file yang berformat gambar (jpg, jpeg, png, webp, gif)
+                const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+                const imageFiles = files.filter(file => {
+                    if (file.type !== 'file') return false;
+                    const nameLower = file.name.toLowerCase();
+                    return imageExtensions.some(ext => nameLower.endsWith(ext));
+                });
+
+                if (imageFiles.length === 0) {
+                    container.innerHTML = `<div class="col-span-2 text-center py-4 text-xs text-slate-400">Belum ada foto di direktori GitHub.</div>`;
+                    return;
+                }
+
+                // Render setiap foto ke dalam galeri secara otomatis
+                imageFiles.forEach(imgFile => {
+                    // Gunakan raw_url atau download_url agar gambar bisa langsung tampil sempurna
+                    const imgUrl = imgFile.download_url;
+                    
+                    const card = document.createElement('div');
+                    card.className = "overflow-hidden rounded-xl aspect-square relative group cursor-pointer";
+                    card.setAttribute('onclick', `openLightbox('${imgUrl}')`);
+                    card.innerHTML = `
+                        <img src="${imgUrl}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="${imgFile.name}">
+                        <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <i class="fa-solid fa-magnifying-glass text-white text-lg"></i>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Gagal memuat galeri dari GitHub:", error);
+                container.innerHTML = `<div class="col-span-2 text-center py-4 text-xs text-rose-500">Gagal memuat galeri otomatis.</div>`;
+            }
+        }
 
         function switchTab(mode) {
             modeAktif = mode;
