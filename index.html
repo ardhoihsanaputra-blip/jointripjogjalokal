@@ -21,13 +21,12 @@
             background-color: #d97706;
             color: #ffffff;
         }
-        /* Sembunyikan scrollbar untuk galeri tapi tetap bisa di-scroll */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
         }
     </style>
 </head>
@@ -134,7 +133,7 @@
                 <span class="text-[10px] text-slate-400">Ketuk untuk perbesar</span>
             </div>
             
-            <div class="grid grid-cols-2 gap-2 mt-2">
+            <div class="grid grid-cols-2 gap-2 mt-2" id="github-gallery-container">
                 <div class="overflow-hidden rounded-xl aspect-square relative group cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
                     <img src="jeep merapi.jpeg" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Galeri 1">
                     <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -163,7 +162,7 @@
                     </div>
                 </div>
 
-            </div>
+                </div>
         </div>
 
         <div class="bg-white rounded-2xl p-5 shadow-md border border-amber-100 space-y-4">
@@ -399,13 +398,11 @@
             window.location.href = `https://wa.me/${nomorWA}?text=${encodeURIComponent(teksPesan)}`;
         }
 
-        // LOGIKA UNTUK LIGHTBOX GALERI
         function openLightbox(src) {
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
             img.src = src;
             lightbox.classList.remove('hidden');
-            // Sedikit delay agar animasi transisi terlihat
             setTimeout(() => {
                 lightbox.classList.remove('opacity-0');
                 img.classList.remove('scale-95');
@@ -419,7 +416,6 @@
             lightbox.classList.add('opacity-0');
             img.classList.remove('scale-100');
             img.classList.add('scale-95');
-            // Menunggu transisi selesai baru menyembunyikan elemen
             setTimeout(() => {
                 lightbox.classList.add('hidden');
             }, 300);
